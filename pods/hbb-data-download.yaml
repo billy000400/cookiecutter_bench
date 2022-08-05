@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: hbb-data-download
+spec:
+    containers:
+    -   name: vol-ct
+        image: jmduarte/capstone-particle-physics-domain
+        command:
+          - "/bin/bash"
+          - "-c"
+          - >
+            cd cookiecutter-bench
+            git clone git@github.com:billy000400/cookiecutter-fair-data-science.git
+            pip install -r requirements.txt
+            cd cookiecutter/hbb_interaction_network/src/data
+            python3 download_raw.py
+        volumeMounts:
+        -   mountPath: /cookiecutter-bench
+            name: cookiecutter-bench
+    restartPolicy: Never
+    volumes:
+        - name: cookiecutter-bench
+          persistentVolumeClaim:
+            claimName: cookiecutter-bench 

@@ -5,13 +5,13 @@ metadata:
 spec:
     containers:
     -   name: vol-ct
-        image: ubuntu
+        image: jmduarte/capstone-particle-physics-domain
         args: ["sleep", "36500000"]
         volumeMounts:
-        -   mountPath: /cookiecutter-rack
-            name: cookiecutter-rack
+        -   mountPath: /cookiecutter-bench
+            name: cookiecutter-bench
     restartPolicy: Never
     volumes:
-        - name: cookiecutter-rack
+        - name: cookiecutter-bench
           persistentVolumeClaim:
-            claimName: cookiecutter-rack        
+            claimName: cookiecutter-bench        
