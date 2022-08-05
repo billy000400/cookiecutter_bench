@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: cookiecutter-rack
+    name: cookiecutter-bench
 spec:
     storageClassName: rook-cephfs
     accessModes:
