@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: explore-billy
+spec:
+    containers:
+    -   name: vol-ct
+        image: ubuntu
+        args: ["sleep", "36500000"]
+        volumeMounts:
+        -   mountPath: /cookiecutter-rack
+            name: cookiecutter-rack
+    restartPolicy: Never
+    volumes:
+        - name: cookiecutter-rack
+          persistentVolumeClaim:
+            claimName: cookiecutter-rack        
