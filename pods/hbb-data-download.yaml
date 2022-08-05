@@ -10,10 +10,13 @@ spec:
           - "/bin/bash"
           - "-c"
           - >
-            cd cookiecutter-bench
-            git clone git@github.com:billy000400/cookiecutter-fair-data-science.git
-            pip install -r requirements.txt
-            cd cookiecutter/hbb_interaction_network/src/data
+            cd /cookiecutter-bench &&
+            rm -rf hbb_interaction_network > /dev/null &&
+            git clone https://github.com/FAIR4HEP/hbb_interaction_network.git &&
+            cd hbb_interaction_network &&
+            git checkout add_code &&
+            pip install --user -r requirements.txt &&
+            cd src/data &&
             python3 download_raw.py
         volumeMounts:
         -   mountPath: /cookiecutter-bench
