@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-    name: hbb-data-download
+    name: hbb-train
 spec:
     containers:
     -   name: vol-ct
@@ -11,13 +11,12 @@ spec:
           - "-c"
           - >
             cd /cookiecutter-bench &&
-            rm -rf hbb_interaction_network > /dev/null &&
             git clone https://github.com/FAIR4HEP/hbb_interaction_network.git &&
             cd hbb_interaction_network &&
             git checkout process_data &&
             pip install --user -r requirements.txt &&
-            cd src/data &&
-            python3 make_dataset.py
+            cd src/model &&
+            python3 train_model.py
         volumeMounts:
         -   mountPath: /cookiecutter-bench
             name: cookiecutter-bench
