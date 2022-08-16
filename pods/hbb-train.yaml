@@ -10,16 +10,24 @@ spec:
           - "/bin/bash"
           - "-c"
           - >
-            cd /cookiecutter-bench &&
-            git clone https://github.com/FAIR4HEP/hbb_interaction_network.git &&
-            cd hbb_interaction_network &&
+            cd /cookiecutter-bench/hbb_interaction_network &&
+            git pull &&
             git checkout process_data &&
             pip install --user -r requirements.txt &&
-            cd src/model &&
+            cd src/models &&
             python3 train_model.py
         volumeMounts:
         -   mountPath: /cookiecutter-bench
             name: cookiecutter-bench
+        resources:
+          limits:
+            memory: 12Gi
+            cpu: "2"
+            nvidia.com/gpu: "1"
+          requests:
+            memory: 12Gi
+            cpu: "2"
+            nvidia.com/gpu: "1"
     restartPolicy: Never
     volumes:
         - name: cookiecutter-bench
