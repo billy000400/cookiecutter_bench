@@ -5,7 +5,7 @@ metadata:
 spec:
     containers:
     -   name: vol-ct
-        image: jmduarte/capstone-particle-physics-domain
+        image: jmduarte/hbb_interaction_network
         args: ["sleep", "36500000"]
         volumeMounts:
         -   mountPath: /cookiecutter-bench
