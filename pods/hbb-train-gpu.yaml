@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: hbb-train-gpu-1024
+spec:
+    template:
+        spec:
+            containers:
+            -   name: vol-ct
+                image: jmduarte/hbb_interaction_network
+                command:
+                  - "/bin/bash"
+                  - "-c"
+                  - >
+                    PATH=$PATH:/cookiecutter-bench/cuda_related/bin &&
+                    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cookiecutter-bench/cuda_related/lib64 &&
+                    cd /cookiecutter-bench/hbb_interaction_network &&
+                    git pull &&
+                    git checkout cpu &&
+                    pip3 install --user -r requirements.txt &&
+                    pip3 uninstall -y torch torchvision torchaudio &&
+                    pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 &&
+                    cd src/models &&
+                    python3 train_model.py --epoch=100 --device="cuda:0" --batch-size=1024
+                volumeMounts:
+                -   mountPath: /cookiecutter-bench
+                    name: cookiecutter-bench
+                resources:
+                  limits:
+                    memory: 12Gi
+                    cpu: "2"
+                    nvidia.com/gpu: "1"
+                  requests:
+                    memory: 12Gi
+                    cpu: "2"
+                    nvidia.com/gpu: "1"
+            restartPolicy: Never
+            volumes:
+                - name: cookiecutter-bench
+                  persistentVolumeClaim:
+                    claimName: cookiecutter-bench 
