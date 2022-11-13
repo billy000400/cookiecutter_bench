@@ -13,7 +13,7 @@ spec:
             cd /cookiecutter-bench/hbb_interaction_network &&
             git pull &&
             git checkout cpu &&
-            pip3 install --user -r requirements.txt &&
+            pip install --user -r requirements.txt &&
             cd src/models &&
             python3 train_model.py
         volumeMounts:

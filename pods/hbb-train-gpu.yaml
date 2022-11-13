@@ -7,7 +7,7 @@ spec:
         spec:
             containers:
             -   name: vol-ct
-                image: jmduarte/hbb_interaction_network
+                image: jmduarte/hbb_interaction_network:gpu
                 command:
                   - "/bin/bash"
                   - "-c"
@@ -16,12 +16,9 @@ spec:
                     LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cookiecutter-bench/cuda_related/lib64 &&
                     cd /cookiecutter-bench/hbb_interaction_network &&
                     git pull &&
-                    git checkout cpu &&
-                    pip3 install --user -r requirements.txt &&
-                    pip3 uninstall -y torch torchvision torchaudio &&
-                    pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 &&
-                    cd src/models &&
-                    python3 train_model.py --epoch=100 --device="cuda:0" --batch-size=1024
+                    git checkout main &&
+                    pip install -e . &&
+                    python src/models/train_model.py --batch-size 1024 --epoch 100 --device cuda
                 volumeMounts:
                 -   mountPath: /cookiecutter-bench
                     name: cookiecutter-bench
